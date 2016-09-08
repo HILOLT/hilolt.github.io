@@ -84,12 +84,15 @@
 
 
 
+<meta name="description" content="Be a better man.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="HILOLT">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://hilolt.github.io/index.html">
 <meta property="og:site_name" content="HILOLT">
+<meta property="og:description" content="Be a better man.">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HILOLT">
+<meta name="twitter:description" content="Be a better man.">
 
 
 
@@ -110,7 +113,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://hilolt.github.io/"/>
 
   <title> HILOLT </title>
 </head>
@@ -279,7 +282,27 @@
       
         
           
-            <h2 id="hello-hexo"><a href="#hello-hexo" class="headerlink" title="hello hexo"></a>hello hexo</h2>
+            <h3 id="hello-hexo"><a href="#hello-hexo" class="headerlink" title="hello hexo"></a>hello hexo</h3><p>/<em>*<br> 非线程安全的可变整数类<br>某个线程调用set，那么另外一个线程正在调用get，value值不一定是更新后的值
+</em>/<br>@NotThreadSafe<br>public class MutableInteger {<br>    private int value;</p>
+<pre><code>public int get() {
+    return value;
+}
+
+public void set(int value) {
+    this.value = value;
+}
+</code></pre><p>}</p>
+<p>/<em>*<br>想要获取正确的value值，set 和 get必须都要同步
+</em>/<br>@NotThreadSafe<br>public class MutableInteger {<br>    @GuardedBy(“this”)private int value;</p>
+<pre><code>public synconized int get() {
+    return value;
+}
+
+public synconized void set(int value) {
+    this.value = value;
+}
+</code></pre><p>}</p>
+
           
         
       
@@ -445,7 +468,7 @@
                src="/images/avatar.gif"
                alt="renault118@gmail.com" />
           <p class="site-author-name" itemprop="name">renault118@gmail.com</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">Be a better man.</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">

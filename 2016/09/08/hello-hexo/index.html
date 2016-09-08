@@ -84,16 +84,34 @@
 
 
 
-<meta name="description" content="hello hexo">
+<meta name="description" content="hello hexo/* 非线程安全的可变整数类某个线程调用set，那么另外一个线程正在调用get，value值不一定是更新后的值
+/@NotThreadSafepublic class MutableInteger {    private int value;
+public int get() {
+    return value;
+}
+
+public void set(int value)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hello hexo">
-<meta property="og:url" content="http://yoursite.com/2016/09/08/hello-hexo/index.html">
+<meta property="og:url" content="http://hilolt.github.io/2016/09/08/hello-hexo/index.html">
 <meta property="og:site_name" content="HILOLT">
-<meta property="og:description" content="hello hexo">
-<meta property="og:updated_time" content="2016-09-08T12:10:33.062Z">
+<meta property="og:description" content="hello hexo/* 非线程安全的可变整数类某个线程调用set，那么另外一个线程正在调用get，value值不一定是更新后的值
+/@NotThreadSafepublic class MutableInteger {    private int value;
+public int get() {
+    return value;
+}
+
+public void set(int value)">
+<meta property="og:updated_time" content="2016-09-08T12:32:02.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hello hexo">
-<meta name="twitter:description" content="hello hexo">
+<meta name="twitter:description" content="hello hexo/* 非线程安全的可变整数类某个线程调用set，那么另外一个线程正在调用get，value值不一定是更新后的值
+/@NotThreadSafepublic class MutableInteger {    private int value;
+public int get() {
+    return value;
+}
+
+public void set(int value)">
 
 
 
@@ -114,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/08/hello-hexo/"/>
+  <link rel="canonical" href="http://hilolt.github.io/2016/09/08/hello-hexo/"/>
 
   <title> hello hexo | HILOLT </title>
 </head>
@@ -276,7 +294,27 @@
       
 
       
-        <h2 id="hello-hexo"><a href="#hello-hexo" class="headerlink" title="hello hexo"></a>hello hexo</h2>
+        <h3 id="hello-hexo"><a href="#hello-hexo" class="headerlink" title="hello hexo"></a>hello hexo</h3><p>/<em>*<br> 非线程安全的可变整数类<br>某个线程调用set，那么另外一个线程正在调用get，value值不一定是更新后的值
+</em>/<br>@NotThreadSafe<br>public class MutableInteger {<br>    private int value;</p>
+<pre><code>public int get() {
+    return value;
+}
+
+public void set(int value) {
+    this.value = value;
+}
+</code></pre><p>}</p>
+<p>/<em>*<br>想要获取正确的value值，set 和 get必须都要同步
+</em>/<br>@NotThreadSafe<br>public class MutableInteger {<br>    @GuardedBy(“this”)private int value;</p>
+<pre><code>public synconized int get() {
+    return value;
+}
+
+public synconized void set(int value) {
+    this.value = value;
+}
+</code></pre><p>}</p>
+
       
     </div>
 
@@ -370,7 +408,7 @@
                src="/images/avatar.gif"
                alt="renault118@gmail.com" />
           <p class="site-author-name" itemprop="name">renault118@gmail.com</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">Be a better man.</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -407,7 +445,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-hexo"><span class="nav-number">1.</span> <span class="nav-text">hello hexo</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hello-hexo"><span class="nav-number">1.</span> <span class="nav-text">hello hexo</span></a></li></ol></div>
             
           </div>
         </section>
