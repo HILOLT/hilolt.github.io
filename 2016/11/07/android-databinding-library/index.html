@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="android,dataBinding,dbl," />
 
 
 
@@ -84,15 +84,47 @@
 
 
 
-<meta name="description" content="Be a better man.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HILOLT">
-<meta property="og:url" content="http://hilolt.github.io/index.html">
+<meta name="description" content="What`s DBLGoogle IO may, 2015，Android M Preview:
+
+ASD(Android Support Design)
+APL(Android Percent Layout)
+DBL(Data Binding Library)
+
+ASD(Android Support Design)
+Navigation View        抽屉导航
+nput Editte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Data Binding Library(DBL)分享">
+<meta property="og:url" content="http://hilolt.github.io/2016/11/07/android-databinding-library/index.html">
 <meta property="og:site_name" content="HILOLT">
-<meta property="og:description" content="Be a better man.">
+<meta property="og:description" content="What`s DBLGoogle IO may, 2015，Android M Preview:
+
+ASD(Android Support Design)
+APL(Android Percent Layout)
+DBL(Data Binding Library)
+
+ASD(Android Support Design)
+Navigation View        抽屉导航
+nput Editte">
+<meta property="og:image" content="http://hilolt.github.io/images/persent_layout_1.jpg">
+<meta property="og:image" content="http://hilolt.github.io/images/persent_layout_2.jpg">
+<meta property="og:image" content="http://hilolt.github.io/images/dbl_source.jpg">
+<meta property="og:image" content="http://hilolt.github.io/images/mvvm.jpg">
+<meta property="og:image" content="http://hilolt.github.io/images/findviewbyid.jpg">
+<meta property="og:image" content="http://hilolt.github.io/images/xml_express.jpg">
+<meta property="og:updated_time" content="2016-11-07T12:55:45.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HILOLT">
-<meta name="twitter:description" content="Be a better man.">
+<meta name="twitter:title" content="Android Data Binding Library(DBL)分享">
+<meta name="twitter:description" content="What`s DBLGoogle IO may, 2015，Android M Preview:
+
+ASD(Android Support Design)
+APL(Android Percent Layout)
+DBL(Data Binding Library)
+
+ASD(Android Support Design)
+Navigation View        抽屉导航
+nput Editte">
+<meta name="twitter:image" content="http://hilolt.github.io/images/persent_layout_1.jpg">
 
 
 
@@ -113,9 +145,9 @@
 
 
 
-  <link rel="canonical" href="http://hilolt.github.io/"/>
+  <link rel="canonical" href="http://hilolt.github.io/2016/11/07/android-databinding-library/"/>
 
-  <title> HILOLT </title>
+  <title> Android Data Binding Library(DBL)分享 | HILOLT </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -136,9 +168,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -215,9 +245,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -237,10 +267,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/11/07/android-databinding-library/" itemprop="url">
-                  Android Data Binding Library(DBL)分享
-                </a>
+                Android Data Binding Library(DBL)分享
               
             
           </h1>
@@ -280,9 +307,7 @@
       
 
       
-        
-          
-            <h3 id="What-s-DBL"><a href="#What-s-DBL" class="headerlink" title="What`s DBL"></a>What`s DBL</h3><p>Google IO may, 2015，Android M Preview:</p>
+        <h3 id="What-s-DBL"><a href="#What-s-DBL" class="headerlink" title="What`s DBL"></a>What`s DBL</h3><p>Google IO may, 2015，Android M Preview:</p>
 <ul>
 <li>ASD(Android Support Design)</li>
 <li>APL(Android Percent Layout)</li>
@@ -375,253 +400,63 @@ ObservableBoolean, ObservableByte, ObservableChar, ObservableDouble, ObservableF
 <p><strong>不管mvc，mvp，mvvm都只是个工具，敢于拥抱新的技术，但也不能盲从，如phonegap，jQuerymobile，然并卵</strong></p>
 <h3 id="倒计时Demo"><a href="#倒计时Demo" class="headerlink" title="倒计时Demo"></a>倒计时Demo</h3><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* &lt;/p&gt;</div><div class="line">* Created by liutao18 on 2016/9/30.</div><div class="line">*/</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">CountdownViewModel</span> <span class="title">extends</span> <span class="title">BaseObservable</span> &#123;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> final String TAG = <span class="string">"CountdownViewModel"</span>;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> CountdownViewModel instance;</div><div class="line">   <span class="keyword">private</span> CountDownTimer countDownTimer;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">long</span> timeLeftMillis;</div><div class="line">   <span class="keyword">private</span> boolean isRunning;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CountdownViewModel <span class="title">me</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">if</span> (instance == <span class="literal">null</span>) &#123;</div><div class="line">           instance = <span class="keyword">new</span> CountdownViewModel();</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> instance;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   @<span class="function">Bindable</span></div><div class="line">   <span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getTimeLeftMillis</span>(<span class="params"></span>) &#123;</div><div class="line">       <span class="keyword">return</span> timeLeftMillis;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTimeLeftMillis</span>(<span class="params"><span class="keyword">long</span> timeLeftMillis</span>) </span>&#123;</div><div class="line">       timeLeftMillis = timeLeftMillis;</div><div class="line">       notifyPropertyChanged((<span class="keyword">int</span>) timeLeftMillis);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startTimer</span>(<span class="params"><span class="keyword">long</span> timeLeftMillis</span>) </span>&#123;</div><div class="line">       <span class="keyword">if</span> (!isRunning) &#123;</div><div class="line">           isRunning = <span class="literal">true</span>;</div><div class="line">           countDownTimer = <span class="keyword">new</span> CountDownTimer(timeLeftMillis, <span class="number">1000</span>) &#123;</div><div class="line">               @<span class="function">Override</span></div><div class="line">               <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTick</span>(<span class="params"><span class="keyword">long</span> millisUntilFinished</span>) &#123;</div><div class="line">                   setTimeLeftMillis(millisUntilFinished / <span class="number">1000</span>);</div><div class="line">               &#125;</div><div class="line"></div><div class="line"></div><div class="line">               @<span class="function">Override</span></div><div class="line">               <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span>(<span class="params"></span>) &#123;</div><div class="line">                   isRunning = <span class="literal">false</span>;</div><div class="line">                   setTimeLeftMillis(<span class="number">0</span>);</div><div class="line">               &#125;</div><div class="line">           &#125;;</div><div class="line">           countDownTimer.start();</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           Log.i(TAG, <span class="string">"Timer already started, call restart first"</span>);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line">    * 取消倒计时</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancelTimer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">if</span> (isRunning) &#123;</div><div class="line">           countDownTimer.cancel();</div><div class="line">           isRunning = <span class="literal">false</span>;</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line">    * 重启倒计时</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">restartTimer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       cancelTimer();</div><div class="line">       startTimer(<span class="number">60000</span>);</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyTestClassActivity</span> <span class="title">extends</span> <span class="title">Activity</span> &#123;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="keyword">private</span> CountdownViewBinding binder;</div><div class="line">   <span class="keyword">private</span> CountdownViewModel countdownViewModel;</div><div class="line"></div><div class="line"></div><div class="line">   @<span class="function">Override</span></div><div class="line">   <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span>(<span class="params">Bundle savedInstanceState</span>) &#123;</div><div class="line">       super.onCreate(savedInstanceState);</div><div class="line">       <span class="keyword">if</span> (binder == <span class="literal">null</span>) &#123;</div><div class="line">           CountdownViewBinding.inflate(getLayoutInflater());</div><div class="line">       &#125;</div><div class="line"></div><div class="line"></div><div class="line">       countdownViewModel = CountdownViewModel.me();</div><div class="line">       binder.setViewModel(countdownViewModel);</div><div class="line"></div><div class="line"></div><div class="line">       binder.btnTest.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">           @<span class="function">Override</span></div><div class="line">           <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span>(<span class="params">View v</span>) &#123;</div><div class="line"></div><div class="line"></div><div class="line">               countdownViewModel.startTimer(<span class="number">60</span> * <span class="number">1000</span>);</div><div class="line"><span class="comment">//                countdownViewModel.cancelTimer();</span></div><div class="line"><span class="comment">//                countdownViewModel.restartTimer();</span></div><div class="line"><span class="comment">//                countdownViewModel.getTimeLeftMillis();</span></div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">&lt;data <span class="keyword">class</span>=<span class="string">"CountdownViewBinding"</span>&gt;</div><div class="line"></div><div class="line">   &lt;import type=<span class="string">"com.baidu.test.CountdownViewModel"</span>/&gt;</div><div class="line"></div><div class="line"></div><div class="line">   &lt;variable</div><div class="line">       name=<span class="string">"viewModel"</span></div><div class="line">       type=<span class="string">"CountdownViewModel"</span>/&gt;</div><div class="line">&lt;/data&gt;</div></pre></td></tr></table></figure>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/08/java-atomic/" itemprop="url">
-                  Java中的Atomic包使用指南
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-08T20:09:58+08:00" content="2016-09-08">
-              2016-09-08
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/android/" rel="tag">#android</a>
           
-            
+            <a href="/tags/dataBinding/" rel="tag">#dataBinding</a>
           
-
-          
-
-          
-          
-
+            <a href="/tags/dbl/" rel="tag">#dbl</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h3 id="Atomic类的作用"><a href="#Atomic类的作用" class="headerlink" title="Atomic类的作用"></a>Atomic类的作用</h3><ul>
-<li>使得让对单一数据的操作，实现了原子化</li>
-<li>使用Atomic类构建复杂的，无需阻塞的代码    </li>
-<li>访问对2个或2个以上的atomic变量（或者对单个atomic变量进行2次或2次以上的操作）通常认为是需要同步的，以达到让这些操作能被作为一个原子单元。</li>
-</ul>
-<p>这个包里面提供了一组原子类。其基本的特性就是在多线程环境下，当有多个线程同时执行这些类的实例包含的方法时，具有排他性，即当某个线程进入方法，执行其中的指令时，不会被其他线程打断，而别的线程就像自旋锁一样，一直等到该方法执行完成，才由JVM从等待队列中选择一个另一个线程进入，这只是一种逻辑上的理解。实际上是借助硬件的相关指令来实现的，不会阻塞线程(或者说只是在硬件级别上阻塞了)。其中的类可以分成4组</p>
-<pre><code>AtomicBoolean，
-AtomicInteger，
-AtomicLong，
-AtomicReference
-
-AtomicIntegerArray，
-AtomicLongArray
-
-AtomicLongFieldUpdater，
-AtomicIntegerFieldUpdater，
-AtomicReferenceFieldUpdater
-
-AtomicMarkableReference，
-AtomicStampedReference，
-AtomicReferenceArray
-</code></pre><h3 id="应用场景：计数器"><a href="#应用场景：计数器" class="headerlink" title="应用场景：计数器"></a>应用场景：计数器</h3><figure class="highlight cs"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 传统</span></div><div class="line"><span class="keyword">class</span> <span class="title">Counter</span> &#123;</div><div class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> synchronized <span class="keyword">void</span> <span class="title">increment</span>(<span class="params"></span>) </span>&#123;</div><div class="line">count++;  <span class="comment">//若要线程安全执行执行count++，需要加锁</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> count;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// atomic</span></div><div class="line"><span class="keyword">class</span> <span class="title">Counter</span> &#123;</div><div class="line"><span class="keyword">private</span> AtomicInteger count = <span class="keyword">new</span> AtomicInteger(); </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">increment</span>(<span class="params"></span>) </span>&#123;</div><div class="line">count.incrementAndGet();</div><div class="line">	&#125;</div><div class="line"><span class="comment">//使用AtomicInteger之后，不需要加锁，也可以实现线程安全。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> count.<span class="keyword">get</span>();</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">实例<span class="number">1</span>：原子更新基本类型类</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AtomicIntegerTest</span> &#123;</div><div class="line">    <span class="keyword">static</span> AtomicInteger ai = <span class="keyword">new</span> AtomicInteger(<span class="number">1</span>);</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) </span>&#123;</div><div class="line">		<span class="comment">//以原子方式将输入的数值与实例中的值（AtomicInteger里的value）相加，并返回结果</span></div><div class="line">        System.<span class="keyword">out</span>.println(ai.getAndIncrement());</div><div class="line">        System.<span class="keyword">out</span>.println(ai.<span class="keyword">get</span>());</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">	输出：</div><div class="line">		<span class="number">1</span></div><div class="line">		<span class="number">2</span></div><div class="line">	</div><div class="line">实例<span class="number">2</span>：原子更新数组类</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AtomicIntegerArrayTest</span> &#123;</div><div class="line"></div><div class="line">	<span class="keyword">static</span> <span class="keyword">int</span>[] <span class="keyword">value</span> = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</div><div class="line"></div><div class="line">	<span class="keyword">static</span> AtomicIntegerArray ai = <span class="keyword">new</span> AtomicIntegerArray(<span class="keyword">value</span>);</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) </span>&#123;</div><div class="line">		ai.getAndSet(<span class="number">0</span>, <span class="number">3</span>);</div><div class="line">		System.<span class="keyword">out</span>.println(ai.<span class="keyword">get</span>(<span class="number">0</span>));</div><div class="line">		System.<span class="keyword">out</span>.println(<span class="keyword">value</span>[<span class="number">0</span>]);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">	<span class="number">3</span></div><div class="line">	<span class="number">1</span></div><div class="line"> </div><div class="line">实例<span class="number">3</span>：原子更新引用类型</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AtomicReferenceTest</span> &#123;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> AtomicReference&lt;user&gt; atomicUserRef = <span class="keyword">new</span> AtomicReference&lt;/user&gt;&lt;user&gt;();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) </span>&#123;</div><div class="line">	User user = <span class="keyword">new</span> User(<span class="string">"conan"</span>, <span class="number">15</span>);</div><div class="line">	atomicUserRef.<span class="keyword">set</span>(user);</div><div class="line">	User updateUser = <span class="keyword">new</span> User(<span class="string">"Shinichi"</span>, <span class="number">17</span>);</div><div class="line">	atomicUserRef.compareAndSet(user, updateUser);</div><div class="line">	System.<span class="keyword">out</span>.println(atomicUserRef.<span class="keyword">get</span>().getName());</div><div class="line">	System.<span class="keyword">out</span>.println(atomicUserRef.<span class="keyword">get</span>().getOld());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title">User</span> &#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">int</span> old;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span>(<span class="params">String name, <span class="keyword">int</span> old</span>) </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">		<span class="keyword">this</span>.old = old;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOld</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> old;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">	Shinichi</div><div class="line">	<span class="number">17</span></div><div class="line"> </div><div class="line">实例<span class="number">4</span>：原子更新字段类</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AtomicIntegerFieldUpdaterTest</span> &#123;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> AtomicIntegerFieldUpdater&lt;User&gt; a = AtomicIntegerFieldUpdater</div><div class="line">		.newUpdater(User.class, <span class="string">"old"</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>) </span>&#123;</div><div class="line">	User conan = <span class="keyword">new</span> User(<span class="string">"conan"</span>, <span class="number">10</span>);</div><div class="line">	System.<span class="keyword">out</span>.println(a.getAndIncrement(conan));</div><div class="line">	System.<span class="keyword">out</span>.println(a.<span class="keyword">get</span>(conan));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">User</span> &#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">int</span> old;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span>(<span class="params">String name, <span class="keyword">int</span> old</span>) </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">		<span class="keyword">this</span>.old = old;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOld</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> old;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">输出：</div><div class="line">	<span class="number">10</span></div><div class="line">	<span class="number">11</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/09/08/java-atomic/" rel="next" title="Java中的Atomic包使用指南">
+                <i class="fa fa-chevron-left"></i> Java中的Atomic包使用指南
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/09/08/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-08T15:06:57+08:00" content="2016-09-08">
-              2016-09-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -629,6 +464,10 @@ AtomicReferenceArray
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -648,8 +487,17 @@ AtomicReferenceArray
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -692,6 +540,17 @@ AtomicReferenceArray
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-s-DBL"><span class="nav-number">1.</span> <span class="nav-text">What`s DBL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ASD-Android-Support-Design"><span class="nav-number">2.</span> <span class="nav-text">ASD(Android Support Design)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APL-Android-Percent-Layout"><span class="nav-number">3.</span> <span class="nav-text">APL(Android Percent Layout)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#What-s-DBL-1"><span class="nav-number">4.</span> <span class="nav-text">What`s DBL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-DBL"><span class="nav-number">5.</span> <span class="nav-text">Why DBL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-DBL"><span class="nav-number">6.</span> <span class="nav-text">Use DBL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单小栗子"><span class="nav-number">7.</span> <span class="nav-text">简单小栗子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何编写xml"><span class="nav-number">8.</span> <span class="nav-text">如何编写xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持的表达式"><span class="nav-number">9.</span> <span class="nav-text">支持的表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何赋值"><span class="nav-number">10.</span> <span class="nav-text">如何赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定事件"><span class="nav-number">11.</span> <span class="nav-text">绑定事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态赋值实例1："><span class="nav-number">12.</span> <span class="nav-text">动态赋值实例1：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态赋值实例2"><span class="nav-number">13.</span> <span class="nav-text">动态赋值实例2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态赋值实例3"><span class="nav-number">14.</span> <span class="nav-text">动态赋值实例3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态赋值实例4"><span class="nav-number">15.</span> <span class="nav-text">动态赋值实例4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用view-ID"><span class="nav-number">16.</span> <span class="nav-text">使用view ID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ViewStubProxy"><span class="nav-number">17.</span> <span class="nav-text">ViewStubProxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Include"><span class="nav-number">18.</span> <span class="nav-text">Include</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ListView"><span class="nav-number">19.</span> <span class="nav-text">ListView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RecyclerView"><span class="nav-number">20.</span> <span class="nav-text">RecyclerView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noting-is-perfect"><span class="nav-number">21.</span> <span class="nav-text">Noting is perfect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒计时Demo"><span class="nav-number">22.</span> <span class="nav-text">倒计时Demo</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -788,6 +647,10 @@ AtomicReferenceArray
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
