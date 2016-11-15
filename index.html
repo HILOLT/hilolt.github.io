@@ -238,6 +238,102 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/15/recyclerview-bug/" itemprop="url">
+                  关于android recyclerview的一些版本bug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-15T14:29:25+08:00" content="2016-11-15">
+              2016-11-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="BUG-1"><a href="#BUG-1" class="headerlink" title="BUG.1"></a>BUG.1</h2><p><strong>APPCOMPAT_V7_VERSION=23.0.1：</strong> recyclerview嵌套recyclerview的时候，内部的recyclerview没有高度。<br><strong>APPCOMPAT_V7_VERSION=23.1.1：</strong> 新版本已经解决这个问题。<br>如果由于项目原因，不能升级到新版本，可以写个兼容类：</p>
+<figure class="highlight processing"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> class FixedLinearLayoutManager extends LinearLayoutManager &#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> FixedLinearLayoutManager(Context context, <span class="built_in">int</span> orientation, <span class="built_in">boolean</span> reverseLayout) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">super</span>(context, orientation, reverseLayout);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="built_in">int</span>[] mMeasuredDimension = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];</div><div class="line"></div><div class="line">    @Override</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">super</span>.onLayoutChildren(recycler, state);</div><div class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException e) &#123;</div><div class="line">            Log.e(<span class="string">"onLayoutChildren"</span>, <span class="string">"'meet a IndexOutOfBoundsException in RecyclerView.'"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,</div><div class="line">                          <span class="built_in">int</span> widthSpec, <span class="built_in">int</span> heightSpec) &#123;</div><div class="line">        <span class="keyword">final</span> <span class="built_in">int</span> widthMode = View.MeasureSpec.getMode(widthSpec);</div><div class="line">        <span class="keyword">final</span> <span class="built_in">int</span> heightMode = View.MeasureSpec.getMode(heightSpec);</div><div class="line">        <span class="keyword">final</span> <span class="built_in">int</span> widthSize = View.MeasureSpec.getSize(widthSpec);</div><div class="line">        <span class="keyword">final</span> <span class="built_in">int</span> heightSize = View.MeasureSpec.getSize(heightSpec);</div><div class="line">        <span class="built_in">int</span> <span class="built_in">width</span> = <span class="number">0</span>;</div><div class="line">        <span class="built_in">int</span> <span class="built_in">height</span> = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; getItemCount(); i++) &#123;</div><div class="line">            measureScrapChild(recycler, i,</div><div class="line">                    View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED),</div><div class="line">                    View.MeasureSpec.makeMeasureSpec(i, View.MeasureSpec.UNSPECIFIED),</div><div class="line">                    mMeasuredDimension);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (getOrientation() == HORIZONTAL) &#123;</div><div class="line">                <span class="built_in">width</span> = <span class="built_in">width</span> + mMeasuredDimension[<span class="number">0</span>];</div><div class="line">                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</div><div class="line">                    <span class="built_in">height</span> = mMeasuredDimension[<span class="number">1</span>];</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="built_in">height</span> = <span class="built_in">height</span> + mMeasuredDimension[<span class="number">1</span>];</div><div class="line">                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</div><div class="line">                    <span class="built_in">width</span> = mMeasuredDimension[<span class="number">0</span>];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">switch</span> (widthMode) &#123;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.EXACTLY:</div><div class="line">                <span class="built_in">width</span> = widthSize;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.AT_MOST:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.UNSPECIFIED:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line"></div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">switch</span> (heightMode) &#123;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.EXACTLY:</div><div class="line">                <span class="built_in">height</span> = heightSize;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.AT_MOST:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> View.MeasureSpec.UNSPECIFIED:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line"></div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        setMeasuredDimension(<span class="built_in">width</span>, <span class="built_in">height</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">void</span> measureScrapChild(RecyclerView.Recycler recycler, <span class="built_in">int</span> position, <span class="built_in">int</span> widthSpec, <span class="built_in">int</span> heightSpec,</div><div class="line">                                   <span class="built_in">int</span>[] measuredDimension) &#123;</div><div class="line"></div><div class="line">        View view = recycler.getViewForPosition(position);</div><div class="line">        <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">            RecyclerView.LayoutParams p = (RecyclerView.LayoutParams) view.getLayoutParams();</div><div class="line">            <span class="built_in">int</span> childWidthSpec = ViewGroup.getChildMeasureSpec(widthSpec,</div><div class="line">                    getPaddingLeft() + getPaddingRight(), p.<span class="built_in">width</span>);</div><div class="line">            <span class="built_in">int</span> childHeightSpec = ViewGroup.getChildMeasureSpec(heightSpec,</div><div class="line">                    getPaddingTop() + getPaddingBottom(), p.<span class="built_in">height</span>);</div><div class="line">            view.measure(childWidthSpec, childHeightSpec);</div><div class="line"></div><div class="line">            measuredDimension[<span class="number">0</span>] = view.getMeasuredWidth() + p.leftMargin + p.rightMargin;</div><div class="line">            measuredDimension[<span class="number">1</span>] = view.getMeasuredHeight() + p.bottomMargin + p.topMargin;</div><div class="line">            recycler.recycleView(view);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="BUG-2"><a href="#BUG-2" class="headerlink" title="BUG.2"></a>BUG.2</h2><p><strong>java.lang.IndexOutOfBoundsException:</strong> 在使用 recycler.getViewForPosition(position),会出现数组角标越界的crash，原因是recyclerview的数据在不同的线程中被修改，简单的解决办法是加个catch，<br>这个bug，出现的频率很小，但google至今没有修改。继承LinearLayoutManager，catch住onLayoutChildren。<br><figure class="highlight scala"><table><tr><td class="code"><pre><div class="line">public <span class="class"><span class="keyword">class</span> <span class="title">FixedLinearLayoutManager</span> <span class="keyword">extends</span> <span class="title">LinearLayoutManager</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    public void onLayoutChildren(<span class="type">RecyclerView</span>.<span class="type">Recycler</span> recycler, <span class="type">RecyclerView</span>.<span class="type">State</span> state) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">super</span>.onLayoutChildren(recycler, state);</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="type">IndexOutOfBoundsException</span> e) &#123;</div><div class="line">            <span class="type">Log</span>.e(<span class="string">"onLayoutChildren"</span>, <span class="string">"'meet a IndexOutOfBoundsException in RecyclerView.'"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/11/07/android-databinding-library/" itemprop="url">
                   Android Data Binding Library(DBL)分享
                 </a>
@@ -660,7 +756,7 @@ AtomicReferenceArray
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -670,7 +766,7 @@ AtomicReferenceArray
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
